@@ -24,6 +24,40 @@ bool pairWithTargetSum(int arr[], int n, int target, int result[2]) {
 
     return 0;
 }
+
+bool usingHashSet(vector<int> &arr, int target, int n) {
+    unordered_set<int> seen;
+
+    for (int i = 0; i < n; i++) {
+        int remaining = target - arr[i];
+
+        if (seen.count(remaining)) {
+            return true;
+        }
+
+        seen.insert(arr[i]);
+    }
+
+    return false;
+}
+// USING map for index store, other wise hashset was good
+
+vector<int> pairWithTargetSum(vector<int> &arr, int target) {
+    unordered_map<int, int> seen;
+
+    for (int i = 0; i < arr.size(); i++) {
+        int remaining = target - arr[i];
+
+        if (seen.count(remaining)) {
+            return {seen[remaining], i};
+        }
+
+        seen[arr[i]] = i;
+    }
+
+    return {};
+}
+
 int main(void) {
     //  Input:  [1, 2, 3, 4, 6], target = 6
     // Output (indices): [1, 3]  // arr[1] + arr[3] = 2 + 4 = 6
